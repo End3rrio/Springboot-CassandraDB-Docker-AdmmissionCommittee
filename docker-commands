@@ -1,0 +1,76 @@
+
+// 1. docker compose up -d
+
+// 2. docker ps (to get our container's ID)
+
+// 3. docker exec -it 48d1f72d85a4 bash
+
+// 4. cqlsh
+
+// 5. describe keyspaces (to see there's no our keyspace)
+
+// 6. create keyspace mikhienkov with replication = {'class':'SimpleStrategy', 'replication_factor':3};
+
+// 7. use mikhienkov;
+
+// 8. Create tables:
+CREATE TABLE  students(
+    id int,
+    name text,
+    surname text,
+    birthday text,
+    address text,
+    phoneNumber text,
+    email text,
+    personalInfo text,
+    PRIMARY KEY ( (id), name, surname )
+);
+
+CREATE TABLE  quotes(
+    id int,
+    trainingDirection text,
+    availableSlots int,
+    PRIMARY KEY ( id )
+);
+
+CREATE TABLE  notes(
+    id int,
+    student_id int,
+    notes text,
+    passingDate text,
+    PRIMARY KEY ( (id), student_id )
+);
+
+CREATE TABLE  applicants(
+    id int,
+    name text,
+    surname text,
+    birthday text,
+    address text,
+    phoneNumber text,
+    email text,
+    educationInfo text,
+    trainingDirection text,
+    entranceExamsResults text,
+    applicationStatus text,
+    PRIMARY KEY ( (id), name, surname )
+);
+
+CREATE TABLE  admissioncommittee(
+    id int,
+    name text,
+    surname text,
+    position text,
+    jobOfferDate text,
+    PRIMARY KEY ( (id), name,surname )
+);
+
+
+
+// 9. describe tables;
+
+--------------------
+
+// Удалить таблицу - drop table <table_name>;
+
+// Сначала запускаем docker compose, затем Springboot...Application

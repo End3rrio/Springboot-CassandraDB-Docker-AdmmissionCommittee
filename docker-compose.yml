@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  cassandra-seed-mikhienkov:
+    image: cassandra:latest
+    container_name: cassandra-seed-mikhienkov
+    ports:
+      - 9042:9042
+    volumes:
+      - cassandra-seed-mikhienkov:/var/lib/cassandra
+    environment:
+      CASSANDRA_CLUSTER_NAME: MikhienkovCluster
+      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+      CASSANDRA_DC: datacenter1
+      AUTO_BOOTSTRAP: false
+  cassandra-node-mikhienkov-1:
+    image: cassandra:latest
+    container_name: cassandra-node-mikhienkov-1
+    depends_on:
+      - cassandra-seed-mikhienkov
+    volumes:
+      - cassandra-node-mikhienkov-1:/var/lib/cassandra
+    environment:
+      CASSANDRA_SEEDS: cassandra-seed-mikhienkov
+      CASSANDRA_CLUSTER_NAME: MikhienkovCluster
+      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+      CASSANDRA_DC: datacenter1
+  cassandra-node-mikhienkov-2:
+    image: cassandra:latest
+    container_name: cassandra-node-mikhienkov-2
+    depends_on:
+      - cassandra-seed-mikhienkov
+    volumes:
+      - cassandra-node-mikhienkov-2:/var/lib/cassandra
+    environment:
+      CASSANDRA_SEEDS: cassandra-seed-mikhienkov
+      CASSANDRA_CLUSTER_NAME: MikhienkovCluster
+      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+      CASSANDRA_DC: datacenter2
+
+volumes:
+  cassandra-seed-mikhienkov:
+  cassandra-node-mikhienkov-1:
+  cassandra-node-mikhienkov-2:
